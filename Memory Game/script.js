@@ -10,8 +10,10 @@
 
 // make clicked cards go into array , check clicked cards to themselves array[0] === array[1]
 //max 2 cards in array 
-const flips = document.querySelector(".flips")
-let flippedCards = []
+const pScore = document.querySelector(".pScore");
+let flippedCards = [];
+let score = 0
+
 
 const cards = [
   {
@@ -82,18 +84,40 @@ function createCards(){
     card.src = "./Img/Gunpla/cardback.jpg"
     container.appendChild(card);
 
-    card.addEventListener('click', flipCard());
+    card.addEventListener('click', flipCard);
   }
 }
 
 
 function flipCard() {
-  let cardId = this.getAttribute('data-id')
-  flippedCards.push(cards[cardId].src)
-  cardsChosenId.push(cardId)
-  this.setAttribute('src', cards[cardId].src)
-  if (flippedCards.length ===2) {
-    setTimeout(checkForMatch, 500)
+  if (flippedCards.length < 2) {
+  let cardId = this.getAttribute('data-id');
+  flippedCards.push(this);
+  console.log(flippedCards);
+  this.setAttribute('src', cards[cardId].src);
+  if(flippedCards.length == 2){
+  matchCheck();}
   }
 }
+
+function matchCheck(){
+		if (flippedCards[0].src === flippedCards[1].src && flippedCards[0]!=flippedCards[1]) {
+			console.log("yay");
+      flippedCards=[];
+      document.querySelector(".pScore").textContent = ++score;
+
+		} else {
+			console.log("no");
+      setTimeout( flipBack, 1000)
+		}
+}
+
+function flipBack(){
+  console.log("test")
+  flippedCards[0].src= "./Img/Gunpla/cardback.jpg";
+  flippedCards[1].src= "./Img/Gunpla/cardback.jpg";
+  flippedCards = []
+}
+
+
 createCards();
