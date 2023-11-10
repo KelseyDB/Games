@@ -9,6 +9,9 @@ const gameLog = document.querySelector(".gameLog");
 const button = document.getElementsByTagName("button");
 const computerIcons = document.querySelector(".computerIcons");
 
+let computerScore = 0
+let playerScore = 0
+
 
 
 function addCImg(computerResult){
@@ -19,6 +22,9 @@ function addCImg(computerResult){
 }
 
 function game(){
+  const score = document.createElement('p')
+  const scoreCont = document.querySelector(".score")
+  scoreCont.appendChild(score)
 
   playerButtons.forEach(choice => {
   choice.addEventListener('click', function() {   
@@ -30,9 +36,7 @@ function game(){
     gameLog.append(logPlayer);
     gameLog.append(result);
     addCImg(computerResult)
-    
-    
-    
+
     const pChoice = choice.className
     console.log(pChoice);
     if (pChoice === computerResult){
@@ -41,29 +45,41 @@ function game(){
     else if (pChoice ==='rock'){
     
       if(computerResult == 'paper'){
+        computerScore++
         result.innerText= "Computer won"
+        
       }
       else{
+        playerScore++
         result.innerText="You win!!!"
+        
       }
     }
     else if (pChoice == 'scissors'){
       if(computerResult =='rock'){
+        computerScore++
         result.innerText= "Computer won"
+        
       }
       else{
+        playerScore++
         result.innerText="You win!!!"
+        
       }
     }
     else if (pChoice == 'paper'){
       if(computerResult == 'scissors'){
+        computerScore++
         result.innerText= "Computer won"
+        
     }
       else{
+        playerScore++
         result.innerText="You win!!!"
+        
       }
     }
-    
+    score.innerHTML=( "Computer: "+computerScore+ "<br>Player: " +playerScore)
   });
   });
 }
